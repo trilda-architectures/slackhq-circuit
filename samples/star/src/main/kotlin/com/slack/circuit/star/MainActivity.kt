@@ -50,19 +50,19 @@ constructor(
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    var backStack: List<Screen> = listOf(HomeScreen)
+    var backstack: List<Screen> = listOf(HomeScreen)
     if (intent.data != null) {
       val httpUrl = intent.data.toString().toHttpUrl()
       val animalId = httpUrl.pathSegments[1].substringAfterLast("-").toLong()
       val petDetailScreen = PetDetailScreen(animalId, null)
-      backStack = listOf(HomeScreen, petDetailScreen)
+      backstack = listOf(HomeScreen, petDetailScreen)
     }
 
     setContent {
       StarTheme {
         // TODO why isn't the windowBackground enough so we don't need to do this?
         Surface(color = MaterialTheme.colorScheme.background) {
-          val backstack = rememberSaveableBackStack { backStack.forEach { screen -> push(screen) } }
+          val backstack = rememberSaveableBackStack { backstack.forEach { screen -> push(screen) } }
           val navigator = rememberCircuitNavigator(backstack)
           CircuitCompositionLocals(circuitConfig) {
             ContentWithOverlays { NavigableCircuitContent(navigator, backstack) }
